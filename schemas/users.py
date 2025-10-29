@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from .tasks import Task
 
@@ -20,6 +20,6 @@ class UserUpdate(BaseModel):
 
 class User(UserBase):
     id: int
-    tasks: List[Task] = []
+    tasks: List[Task] = Field(default_factory=list)
 
     model_config = {"from_attributes": True}
