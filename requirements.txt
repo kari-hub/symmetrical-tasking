@@ -11,6 +11,8 @@ passlib[bcrypt]
 email-validator
 python-multipart
 logger
+jwt
+pydantic_settings
 # psycopg2
 
 

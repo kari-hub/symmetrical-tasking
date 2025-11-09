@@ -4,3 +4,4 @@ __pycache__
 alembic/__pycache__
 alembic/versions/__pycache__
 task-manager.dump
+settings.json
