@@ -1,4 +1,4 @@
-from models import Task
+from models.tasks import Task
 from sqlalchemy.orm import Session
 from schemas.tasks import TaskCreate, TaskUpdate
 from fastapi import HTTPException, status

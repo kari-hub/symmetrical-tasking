@@ -1,4 +1,5 @@
-from models import User, Task
+from models.users import User
+from models.tasks import Task
 from sqlalchemy.orm import Session
 from schemas.users import UserCreate, UserUpdate
 from fastapi import status, HTTPException
