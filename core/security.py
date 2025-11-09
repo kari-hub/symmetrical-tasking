@@ -1,16 +1,24 @@
-from pydantic_settings import BaseSettings
-from dotenv import load_dotenv
-
-load_dotenv()
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, SecretStr, ValidationError
 
 
 class Settings(BaseSettings):
-    SECRET_KEY: str
-    ALGORITHM: str
-    ACCESS_TOKEN_EXPIRY_MINUTES: int
+    database_url: str = Field(..., alias="DATABASE_URL")
+    secret_key: SecretStr = Field(..., alias="SECRET_KEY")
+    algorithm: str = Field(..., alias="ALGORITHM")
+    access_token_expiry_minutes: int = Field(..., alias="ACCESS_TOKEN_EXPIRY_MINUTES")
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
 
-settings = Settings()
+def _load_settings() -> Settings:
+    try:
+        return Settings()
+    except ValidationError as e:
+        raise RuntimeError(
+            "failure to load settings from environment (.env or env)."
+            f"validation errors: {e.errors()}"
+        ) from e
+
+
+settings = _load_settings()

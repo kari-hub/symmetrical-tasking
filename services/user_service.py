@@ -3,6 +3,7 @@ from models.tasks import Task
 from sqlalchemy.orm import Session
 from schemas.users import UserCreate, UserUpdate
 from fastapi import status, HTTPException
+from services.auth import get_password_hash
 
 """
 define the functions to create, get, update users    
@@ -10,7 +11,9 @@ define the functions to create, get, update users
 
 
 def create_new_user(db: Session, data: UserCreate):
-    new_user = User(**data.model_dump())  # conversion to dict
+    payload = data.model_dump()
+    payload["password"] = get_password_hash(payload["password"])
+    new_user = User(**payload)  # conversion to dict
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -25,10 +28,20 @@ def get_user(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
 
 
+def get_user_by_email(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
+
+
 def update_user(db: Session, user_id: int, user_data: UserUpdate):
     user = db.query(User).filter(User.id == user_id).first()
     if user:
-        for key, value in user_data.model_dump(exclude_unset=True).items():
+        changes = user_data.model_dump(exclude_unset=True)
+
+        # if password provided, hash it before saving
+        if "password" in changes and changes["password"] is not None:
+            changes["password"] = get_password_hash(changes["password"])
+
+        for key, value in changes.items():
             setattr(user, key, value)
         db.commit()
         db.refresh(user)
