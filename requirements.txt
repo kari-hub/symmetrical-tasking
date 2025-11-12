@@ -13,6 +13,9 @@ python-multipart
 logger
 jwt
 pydantic_settings
+mypy
+types-python-jose
+types-passlib
 # psycopg2
 
 

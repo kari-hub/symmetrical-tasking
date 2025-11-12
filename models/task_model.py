@@ -8,7 +8,7 @@ from sqlalchemy import (
     func,
     Enum as SQLAlchemyEnum,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, mapped_column, Mapped
 from db import Base
 from enum import Enum
 
@@ -34,7 +34,11 @@ class Task(Base):
     due_at = Column(DateTime(timezone=True), nullable=True)
     completed = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    status = Column(SQLAlchemyEnum(TaskStatus), default=TaskStatus.TODO)
-    priority = Column(SQLAlchemyEnum(TaskPriority), default=TaskPriority.LOW)
+    status: Mapped[TaskStatus] = mapped_column(
+        SQLAlchemyEnum(TaskStatus), default=TaskStatus.TODO
+    )
+    priority: Mapped[TaskPriority] = mapped_column(
+        SQLAlchemyEnum(TaskPriority), default=TaskPriority.LOW
+    )
 
     owner = relationship("User", back_populates="tasks")

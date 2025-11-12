@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
 
-def _load_settings() -> Settings:
+def _load_settings() -> Settings:  # type: ignore
     try:
-        return Settings()
+        return Settings(**{})  # for the type checker
     except ValidationError as e:
         raise RuntimeError(
             "failure to load settings from environment (.env or env)."
