@@ -9,7 +9,7 @@ define the functions to create, get, update and delete tasks
 
 
 def create_task(db: Session, data: TaskCreate, current_user_id: int):
-    new_task = Task(**data.model_dump(), owner_id=current_user_id)
+    new_task = Task(**data.model_dump(exclude={"owner_id"}), owner_id=current_user_id)
     db.add(new_task)
     db.commit()
     db.refresh(new_task)
