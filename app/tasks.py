@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from services.auth import get_current_user
-from models.users import User
+from models.users_model import User
 from sqlalchemy.orm import Session
 from db import get_db
 from typing import List
-from schemas.tasks import TaskCreate, TaskUpdate, Task
+from schemas.task import TaskCreate, TaskUpdate, Task
 from services.task_service import (
     get_task,
     get_all_tasks,

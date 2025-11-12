@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 # from enum import Enum
-from models.tasks import TaskPriority, TaskStatus
+from models.task_model import TaskPriority, TaskStatus
 
 
 class TaskBase(BaseModel):

@@ -1,9 +1,9 @@
-from models.users import User
-from models.tasks import Task
+from models.users_model import User
+from models.task_model import Task
 from sqlalchemy.orm import Session
-from schemas.users import UserCreate, UserUpdate
+from schemas.user import UserCreate, UserUpdate
 from fastapi import status, HTTPException
-from services.auth import get_password_hash
+from services.auth_service import get_password_hash
 
 """
 define the functions to create, get, update users    

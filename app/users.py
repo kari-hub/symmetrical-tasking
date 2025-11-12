@@ -9,7 +9,7 @@ from services.user_service import (
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db import get_db
-from schemas.users import UserCreate, UserUpdate, User
+from schemas.user import UserCreate, UserUpdate, User
 from services.auth import get_current_user
 from typing import List
 
