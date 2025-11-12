@@ -4,10 +4,10 @@ from services.auth import authenticate_user, create_access_token
 from sqlalchemy.orm import Session
 from db import get_db
 
-app = APIRouter()
+router = APIRouter(tags=["Authentication"])
 
 
-@app.post("/login")
+@router.post("/login")
 async def login(
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):

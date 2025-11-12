@@ -1,13 +1,16 @@
 from fastapi import FastAPI
-from app.auth import app as auth_router
-from app.tasks import app as task_router
+from app.auth import router as auth_router
+from app.tasks import router as task_router
+from app.users import router as user_router
 # from fastapi import Depends
 
 app = FastAPI()
 
 # include routers
 app.include_router(auth_router)
+app.include_router(user_router)
 app.include_router(task_router)
+
 
 # tasks = []
 
