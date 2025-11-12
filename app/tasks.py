@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status, HTTPException
-from services.auth import get_current_user
+from services.auth_service import get_current_user
 from models.users_model import User
 from sqlalchemy.orm import Session
 from db import get_db
