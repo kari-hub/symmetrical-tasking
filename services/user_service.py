@@ -12,8 +12,12 @@ define the functions to create, get, update users
 
 def create_new_user(db: Session, data: UserCreate):
     payload = data.model_dump()
-    payload["password"] = get_password_hash(payload["password"])
-    new_user = User(**payload)  # conversion to dict
+    hashed_password = get_password_hash(payload.pop("password"))
+    new_user = User(
+        username=payload["username"],
+        email=payload["email"],
+        hashed_password=hashed_password,
+    )  # updated to use correct password value
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
